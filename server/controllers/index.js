@@ -14,6 +14,8 @@ module.exports = {
   messages: {
     get: function (req, res) {
       console.log('hi');
+      models.messages.get(req, res);
+      
     }, // a function which handles a get request for all messages
     post: function (req, res) {
       app.use(parser.json()) 
