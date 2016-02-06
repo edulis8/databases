@@ -1,5 +1,8 @@
 var controllers = require('./controllers');
+ // serving and receiving
+
 var router = require('express').Router();
+
 
 for (var route in controllers) {
   router.route("/" + route)

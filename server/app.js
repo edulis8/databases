@@ -1,6 +1,27 @@
 var express = require('express');
 var db = require('./db');
 
+//// DB Connection
+db.connect(function(err){
+  if (err){
+    console.log('Error connecting to db IN APP');
+    return;
+  }
+  console.log('connection established IN APP');
+});
+
+
+
+// db.query("INSERT INTO messages (username) values ('TESTUSER')", function(err, res){
+//         if(err){
+//           console.log('ERROR in posting user to DB');
+//         } else {
+//           console.log('Data received from DB:\n');
+//           console.log('res', res);
+//         }
+//       });
+
+
 // Middleware
 var morgan = require('morgan');
 var parser = require('body-parser');
