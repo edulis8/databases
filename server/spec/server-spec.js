@@ -5,31 +5,44 @@ var mysql = require('mysql');
 var request = require("request"); // You might need to npm install the request module!
 var expect = require('../../node_modules/chai/chai').expect;
 
-describe("Persistent Node Chat Server", function() {
-  var dbConnection;
+var db = require('../db');
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('chat', 'root', '');
 
-  beforeEach(function(done) {
-    dbConnection = mysql.createConnection({
-      user: "root",
-      password: "",
-      database: "chat"
-    });
-    dbConnection.connect();
+db.User.sync();
 
-       var tablename = "messages"; // DONE! TODO: fill this out
-       var tablename2 = "users";
-    /* Empty the db table before each test so that multiple tests
-     * (or repeated runs of the tests) won't screw each other up: */
-    dbConnection.query("truncate " + tablename);
-    dbConnection.query("truncate " + tablename2, done);
-  });
 
-  afterEach(function() {
-    dbConnection.end();
-  });
+ describe("Persistent Node Chat Server", function() {
+//   //var dbConnection;
+
+  beforeEach(function() {
+//     // console.log('start of dbConnection')
+//     
+      db.User.sync();
+// dbConnection = mysql.createConnection({
+//     //   user: "root",
+//     //   password: "",
+//     //   database: "chat"
+//     // });
+//     // console.log('before .connect()')
+//     // dbConnection.connect();
+//     // console.log('after .connect()')
+
+//     //    var tablename = "messages"; // DONE! TODO: fill this out
+//     //    var tablename2 = "users";
+//     // /* Empty the db table before each test so that multiple tests
+//     //  * (or repeated runs of the tests) won't screw each other up: */
+//     // dbConnection.query("truncate " + tablename);
+//     //dbConnection.query("truncate " + tablename2, done);
+   });
+
+//   afterEach(function() {
+//     //dbConnection.end();
+//   });
 
   it("Should insert posted messages to the DB", function(done) {
     // Post the user to the chat server.
+    console.log('XXXXXXXXXXXXXXXXXXXXXX')
     request({ method: "POST",
               uri: "http://127.0.0.1:3000/classes/users",
               json: { username: "Valjean" }
