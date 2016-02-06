@@ -12,11 +12,24 @@ var db = require('../db');
 
 module.exports = {
   messages: {
-    get: function () {}, // a function which produces all the messages
+    get: function (req, res) {
+      db.query('SELECT * FROM messages', function(err, dbData){
+        if(err){
+          console.log('Error GETTING messages from DB');
+        } else {
+          console.log('Data selected from DB:\n');
+          console.log('dbData', dbData);
+
+          var json = JSON.stringify(dbData);
+          console.log('json', json);
+          res.send({results:dbData});
+        }
+      });
+    }, // a function which produces all the messages
     post: function (messages) {
 
       console.log(messages); 
-      
+
       db.query('INSERT INTO messages SET ?', messages, function(err, res){
         if(err){
           console.log('ERROR in posting user to DB');
