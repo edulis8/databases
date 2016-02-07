@@ -9,7 +9,7 @@ var db = require('../db');
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('chat', 'root', '');
 
-db.User.sync();
+//db.User.sync();
 
 
  describe("Persistent Node Chat Server", function() {

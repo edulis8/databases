@@ -12,11 +12,7 @@ var Message = sequelize.define('messages', {
   roomname: Sequelize.STRING
 });
 
- // uid: {
- //    type: Sequelize.INTEGER,
- //    primaryKey: true,
- //    autoIncrement: true // Automatically gets converted to SERIAL for postgres
- //  }
+
 
 User.sync();
 Message.sync();
