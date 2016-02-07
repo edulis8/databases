@@ -6,13 +6,13 @@ var sequelize = new Sequelize('chat', 'root', '');
 var User = sequelize.define('users', {username : Sequelize.STRING});
 
 var Message = sequelize.define('messages', {
-  userid: Sequelize.INTEGER,
-  username: Sequelize.STRING,
+  
   message: Sequelize.STRING,
   roomname: Sequelize.STRING
 });
 
-
+User.hasMany(Message);
+Message.belongsTo(User);
 
 User.sync();
 Message.sync();

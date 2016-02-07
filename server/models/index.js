@@ -10,12 +10,31 @@ var db = require('../db');
 
 ////////DATABASE MANUPULATION////////////
 
+// Customer.findAll({
+//     attributes: ["birthday"],
+//     order: [[ User, "name", "ASC" ]],
+//     include: [
+//         { model: User, attributes: ["name", "email"] }
+//     ],
+//     limit: 1
+// }, {
+//     raw: true
+// }).then(function(data) {
+//     console.log(data);
+// });
+
+
 module.exports = {
   messages: 
   {
     get: function (req, res) {
-      console.log('db.Message', db.Message);
-      db.Message.findAll().then(function(results){
+
+      console.log('DB USER', db.User);
+
+      db.Message.findAll({
+        include : [db.User]
+        //include : [{ model : db.User }]
+      }).then(function(results){
         //results is an array of messages from the table.
         res.send({results: results});
       }).catch(function(err){
@@ -24,9 +43,22 @@ module.exports = {
     }, 
 
     post: function (message) {
+      console.log('MESSAGE',message)
+      console.log(message.username)
+      db.User.findOrCreate({where: {username: message.username}})
+        .then(function(user){
+          var params = {
+            message: message.message,
+            userid: user.id,
+            roomname: message.roomname
+          };
+          db.Message.create(params);
+        });
+
       console.log(message); 
-      var newMessage = db.Message.build(message);
-      newMessage.save();  
+
+      // var newMessage = db.Message.build(message);
+      // newMessage.save();  
      //  db.query('INSERT INTO messages SET ?', messages, function(err, res){
      //    if(err){
      //      console.log('ERROR in posting user to DB');

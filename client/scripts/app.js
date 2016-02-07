@@ -230,4 +230,31 @@ $(function() {
       // *** $('form input[type=submit]').attr('disabled', null);
     }
   };
+
+  $('#usernameform').submit(function(e){
+
+    e.preventDefault();
+    
+    var data = $('#username').val();
+
+    console.log(data)
+
+    $.ajax({
+        url: 'http://127.0.0.1:3000/classes/users',
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function (data) {
+          console.log('chatterbox: Message sent');
+          // Trigger a fetch to update the messages, pass true to animate
+          // *** app.fetch();
+        },
+        error: function (data) {
+          console.error('chatterbox: Failed to send message');
+        }
+      });
+    $('#username').val('');
+  })
+
+
 }());
